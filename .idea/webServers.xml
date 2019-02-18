@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="556b35f1-626c-412f-8bb5-950ed57e9355" name="photo" url="http://grey.elastictech.org">
+        <fileTransfer host="grey.elastictech.org" port="21" rootFolder="/domains/u4225.grey.elastictech.org">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
