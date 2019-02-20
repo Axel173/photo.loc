@@ -36,7 +36,7 @@
 
                         <div class="form-group">
                             <label for="parent_id">Родитель</label>
-                            <select name="parent_id" value="{{ $item->slug }}"
+                            <select name="parent_id"
                                     id="parent_id"
                                     type="text"
                                     class="form-control"
@@ -55,9 +55,7 @@
                             <textarea name="description"
                                       id="description"
                                       rows="3"
-                                      class="form-control">
-                                {{ $item->description }}
-                            </textarea>
+                                      class="form-control">{{ old('description', $item->description) }}</textarea>
                         </div>
                     </div>
                 </div>
