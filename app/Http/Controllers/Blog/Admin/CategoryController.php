@@ -50,7 +50,6 @@ class CategoryController extends BaseController
 
         //Создаст объект но не добавит в БД
         $item = new BlogCategory($data);
-        dd($item);
         $item->save();
 
         if ($item) {
@@ -72,8 +71,10 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        $item = BlogCategory::findOrFail($id);
-        $categoryList = BlogCategory::all();
+        /*$item = BlogCategory::findOrFail($id);
+        $categoryList = BlogCategory::all();*/
+        $item = $categoryRepository->getEdit($id);
+        $categoryList = $categoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -109,9 +110,7 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        $result = $item
-            ->fill($data)
-            ->save();
+        $result = $item->update($data);
 
         if ($result) {
             return redirect()
