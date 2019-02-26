@@ -71,10 +71,10 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        /*$item = BlogCategory::findOrFail($id);
-        $categoryList = BlogCategory::all();*/
-        $item = $categoryRepository->getEdit($id);
-        $categoryList = $categoryRepository->getForComboBox();
+        $item = BlogCategory::findOrFail($id);
+        $categoryList = BlogCategory::all();
+        /*$item = $categoryRepository->getEdit($id);
+        $categoryList = $categoryRepository->getForComboBox();*/
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -122,5 +122,4 @@ class CategoryController extends BaseController
                 ->withInput();
         }
     }
-
 }
