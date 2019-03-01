@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog\Admin;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
+use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
@@ -14,9 +15,19 @@ class CategoryController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
     public function index()
     {
-        $paginator = BlogCategory::paginate(5);
+        //$paginator = BlogCategory::paginate(5);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
@@ -29,7 +40,8 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        $categoryList
+            = $this->blogCategoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -69,12 +81,15 @@ class CategoryController extends BaseController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        $item = BlogCategory::findOrFail($id);
-        $categoryList = BlogCategory::all();
-        /*$item = $categoryRepository->getEdit($id);
-        $categoryList = $categoryRepository->getForComboBox();*/
+        /*$item = BlogCategory::findOrFail($id);
+        $categoryList = BlogCategory::all();*/
+        $item = $categoryRepository->getEdit($id);
+        if(empty($item)) {
+            abort(404);
+        }
+        $categoryList = $categoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit',
             compact('item', 'categoryList'));
@@ -122,4 +137,5 @@ class CategoryController extends BaseController
                 ->withInput();
         }
     }
+
 }
