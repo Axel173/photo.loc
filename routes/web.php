@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 /*Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role:admin'], function (){
 
@@ -34,13 +36,14 @@ Route::group($groupData, function () {
     Route::resource('categories', 'CategoryController')
         ->only($methods)
         ->names('blog.admin.categories');
+    //BlogPost
+    Route::resource('posts', 'PostController')
+        ->except(['show'])
+        ->names('blog.admin.posts');
+
+
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () {
-    Route::resource('posts', 'PostController')->names('blog.posts');
-});
 
 
 
